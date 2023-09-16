@@ -1,0 +1,42 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.header {
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 1.5em;
+}
+.section_table {
+border: 3px solid black;
+box-shadow: 0px 0px 50px rgba(0, 255, 255, .5);
+}
+.use-btn {
+    margin: 0 5px 0 0 ;
+}
+table {
+    display: block;
+    height: 500px;
+    overflow-y: scroll;
+}
+
+td {
+    border-bottom: 1px solid black;
+    padding: 5px 0;
+}
+
+.table_title {
+font-weight: bold;
+text-align: center;
+}
+
+.section_inputs {
+    border: 3px solid black;
+    height: 300px;
+    margin-top: 20px;
+    box-shadow: 0px 0px 50px rgba(0, 255, 255, .5);
+
+}
+
+.hidden {
+    display:none;
+}
