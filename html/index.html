@@ -16,8 +16,8 @@
 </div>
 </header>
 
-<section>
-    <div class="section_table">
+<section class="section_table">
+    <div>
         <table class="main_table">
             <tr class="table_title">
                 <td class="hidden">Command</td><td>Name</td><td>Description</td>
@@ -26,23 +26,53 @@
     </div>
 </section>
 <section class="section_inputs ">
-    <div class="command_name">
+    
+    <div class="command_name header">
         <p></p>
     </div>
     <div class="command_description">
         <p></p>
     </div>
-    <div class="command_moreinfo">
-        <p></p>
-    </div>
-<div class="inputs">
     <div class="inputs">
-        Select device ID: <input type="text" value="FE" class="id_input">
-    </div>
-    <div class="selects hidden">
-        FIxed Values: <select name="" id="values"></select>
+        <div class="inputs">
+            Select device ID: <input type="text" value="FE" class="id_input">
+        </div>
+        <div class="inputs hidden">
+            Enter Value: <input type="text" value="" class="open_input">
+        </div>
+        <div class="selects hidden" >
+            Fixed Values: <select name="" id="options"></select>
+        </div>
+        <div class="command_moreinfo hidden">
+            <p></p>
+        </div>
+    <div class="fixed-inputs">
+        <div class="d1 hidden d-div">D01: <input type="text" value="" id="d1" class="d"></div>
+        <div class="d2 hidden d-div">D02: <input type="text" value="" id="d2" class="d"></div>
+        <div class="d3 hidden d-div">D03: <input type="text" value="" id="d3" class="d"></div>
+        <div class="d4 hidden d-div">D04: <input type="text" value="" id="d4" class="d"></div>
+        <div class="d5 hidden d-div">D05: <input type="text" value="" id="d5" class="d"></div>
+        <div class="d6 hidden d-div">D06: <input type="text" value="" id="d6" class="d"></div>
+        <div class="d7 hidden d-div">D07: <input type="text" value="" id="d7" class="d"></div>
+        <div class="d8 hidden d-div">D08: <input type="text" value="" id="d8" class="d"></div>
+        <div class="d9 hidden d-div">D09: <input type="text" value="" id="d9" class="d"></div>
+        <div class="d10 hidden d-div">D10: <input type="text" value="" id="d10" class="d"></div>
+        <div class="d11 hidden d-div">D11: <input type="text" value="" id="d11" class="d"></div>
+        <div class="d12 hidden d-div">D12: <input type="text" value="" id="d12" class="d"></div>
+        <div class="d13 hidden d-div">D13: <input type="text" value="" id="d13" class="d"></div>
+        <div class="d14 hidden d-div">D14: <input type="text" value="" id="d14" class="d"></div>
+        <div class="d15 hidden d-div">D15: <input type="text" value="" id="d15" class="d"></div>
+        <div class="d16 hidden d-div">D16: <input type="text" value="" id="d16" class="d"></div>
     </div>
 </div>
+</section>
+<section class="section_result">
+    <div class="header" >
+        <h3>Result HEX</h3>
+    </div>
+    <div class="result" >
+        <h1></h1>
+    </div>
 </section>
 
     <script src="index.js"></script>
