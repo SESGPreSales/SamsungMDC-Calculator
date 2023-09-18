@@ -19,7 +19,7 @@ box-shadow: 0px 0px 50px rgba(59, 59, 59, 0.5);
 
 table {
     display: block;
-    height: 500px;
+    height: 400px;
     overflow-y: scroll;
     padding: 0 20px;
 }
@@ -34,9 +34,9 @@ font-weight: bold;
 text-align: center;
 }
 
-.section_result {
+.section_result, .section_image {
     border: 3px solid black;
-    height: 300px;
+    height: auto;
     margin-top: 20px;
     box-shadow: 0px 0px 50px rgba(59, 59, 59, 0.5);
     padding-left: 20px;
@@ -63,10 +63,24 @@ text-align: center;
 .command_moreinfo {
     border: 1px dotted gray;
     width: 95%;
+    margin: 25px 0;
+    padding: 5px;
+    text-align: center;
+    font-style: italic;
 }
 
 .inputs {
-    margin-top: 25px;
+    margin-top: 20px;
+}
+
+.inputs>p, .selects>p{
+    display: inline-block;
+    width: 150px;
+    margin-left: 100px;
+}
+
+.id_input {
+    margin-left: 0;
 }
 
 .result>h1 {
@@ -84,4 +98,9 @@ text-align: center;
 
 #d1,#d2,#d3,#d4,#d5,#d6,#d7,#d8,#d9,#d10,#d11,#d12,#d13,#d14,#d15,#d16 {
     margin: 5px;
+    width: 50px;
+}
+
+.selects {
+    margin-top: 0px;
 }
