@@ -15,10 +15,14 @@ const input_id = document.querySelector('.id_input');
 const openInput = document.querySelector('.open_input');
 const dInputs = document.querySelectorAll('.d');
 const imagediv = document.querySelector('.image');
+const search = document.querySelector('.search-input');
+
 //eventlisteners
-table.addEventListener('click', selectItem )
+table.addEventListener('click', selectItem );
+search.addEventListener('input', filter);
 
 function getData() {
+
     req.open('get','../data/mdc.commands.json')
     req.onload = () => {
          res = JSON.parse(req.response);
@@ -34,6 +38,7 @@ function createTable(e){
     const command = document.createElement('td');
     const newTd1 = document.createElement('td');
     const newTd2 = document.createElement('td');
+    
     command.innerText= e.command;
     newTd1.innerText= e.name;
     newTd2.innerText= e.Description;
@@ -41,15 +46,9 @@ function createTable(e){
     newTr.classList.add('table_item')
     command.classList.add('command')
 
-
-    // const useButton = document.createElement('button')
-    // useButton.innerHTML= '<i class="fa-regular fa-hand-pointer"></i>';
-    // useButton.classList.add('use-btn')
-
     newTr.appendChild(command);
     newTr.appendChild(newTd1);
     newTr.appendChild(newTd2);
-
 
     table.appendChild(newTr);
 }
@@ -176,7 +175,6 @@ function showDetails(data) {
         }
     }; 
 };
-
 function two(val){
         val = val.toString();
         while (val.length < 2) val = `0${val}`;
@@ -214,6 +212,29 @@ function showHEX(val) {
     let outputresult = val.join(' ');
     hexoutputFinal.innerText = outputresult;
     
+}
+//filter Table by Name
+function filter() {
+ // Declare variables
+ var input, filter, tr, td, i, txtValue;
+ input = search;
+ filter = input.value.toUpperCase();
+ console.log(filter)
+ tr = table.querySelectorAll(".table_item");
+
+ // Loop through all table rows, and hide those who don't match the search query
+ for (i = 0; i < tr.length; i++) {
+   td = tr[i].querySelectorAll('td')[1];
+   if (td) {
+     txtValue = td.textContent || td.innerText;
+     console.log(txtValue)
+     if (txtValue.toUpperCase().indexOf(filter) > -1) {
+       tr[i].style.display = "";
+     } else {
+       tr[i].style.display = "none";
+     }
+   }
+ }
 }
 
 // Data from JSON is fetched once on pageload
