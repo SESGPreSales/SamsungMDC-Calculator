@@ -122,7 +122,7 @@ function showDetails(data) {
     function calculate(){
         if(hasFixedValues && !hasSubCmd && dataLength) {
             // calculate if openInput fiels are needes (-1 because this is from the selector)
-            outData = [command, input_id.value,dataLength,selects.value]
+            outData = [command, input_id.value,two(dataLength),selects.value]
 
             if (neededFiels == 0) showHEX(outData)
             if (neededFiels > 0) {
