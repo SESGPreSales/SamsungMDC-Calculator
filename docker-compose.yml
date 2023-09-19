@@ -4,5 +4,17 @@ services:
   calculator:
     build: .
     ports:
-      - "80:80"
+      - "80"
     restart: always
+    networks:
+      - traefik-proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mdc.rule=Host(`mdc.sesg.ch`)"
+      - "traefik.http.services.mdc.loadbalancer.server.port=80"
+      # - "traefik.http.middlewares.strip-apppath.stripprefix.prefixes=/app"
+      # - "traefik.http.routers.app.middlewares=strip-apppath@docker"
+
+networks:
+  traefik-proxy:
+    external: true
