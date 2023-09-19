@@ -152,7 +152,8 @@ function showDetails(data) {
         if(!hasFixedValues && hasSubCmd && !dataLength) {
             
             let openVal = openInput.value; 
-            outData = [command, input_id.value, two(openVal.length + 1), subCmd];
+
+            outData = [command, input_id.value, two((openVal.length + 1).toString(16)), subCmd];
             
             Array.from(openVal).forEach( e => {
                 let val = two(e.charCodeAt().toString(16).toUpperCase());
@@ -164,7 +165,7 @@ function showDetails(data) {
             
             let openVal = openInput.value; 
 
-            outData = [command, input_id.value, two(openVal.length)];
+            outData = [command, input_id.value, two((openVal.length).toString(16))];
             
             Array.from(openVal).forEach( e => {
                 let val = two(e.charCodeAt().toString(16).toUpperCase());
@@ -208,7 +209,7 @@ function showDetails(data) {
 function two(val){
         val = val.toString();
         while (val.length < 2) val = `0${val}`;
-        return val; 
+        return val.toUpperCase(); 
 }
 function createOptionsSelect(values){
     
