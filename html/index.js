@@ -17,26 +17,46 @@ const openInput = document.querySelector('.open_input');
 const dInputs = document.querySelectorAll('.d');
 const imagediv = document.querySelector('.image');
 const search = document.querySelector('.search-input');
-
+const appVersion = document.querySelector('.header p');
 //eventlisteners
 table.addEventListener('click', selectItem );
 search.addEventListener('input', filter);
-appVersion = document.querySelector('.header p');
-
 appVersion.innerText = version;
+let tr = [];
+
+
+function hover() {
+    tr.forEach( e => e.addEventListener('mouseover', changeBg ));
+    tr.forEach( e => e.addEventListener('mouseout', changeBg ));
+    tr.forEach( e => e.addEventListener('click', changeBgFix ));
+};
+
+function changeBg(e) {
+    const item = e.target;
+    const itemParent = item.parentElement
+    itemParent.classList.toggle('over')
+}
+
+function changeBgFix(e) {
+    const item = e.target;
+    tr.forEach( e => e.classList.remove('selected'));
+    const itemParent = item.parentElement ;
+    itemParent.classList.add('selected');
+}
 
 function getData() {
-
+    
     req.open('get','./data/mdc.commands.json')
     req.onload = () => {
-         res = JSON.parse(req.response);
+        res = JSON.parse(req.response);
         // console.log(res)
-    res.forEach(e => createTable(e))
+        res.forEach(e => createTable(e));
+        hover();
     }
     req.send();
 }
 function createTable(e){ 
-
+    
     const newTr = document.createElement('tr');
     
     const command = document.createElement('td');
@@ -46,15 +66,17 @@ function createTable(e){
     command.innerText= e.command;
     newTd1.innerText= e.name;
     newTd2.innerText= e.Description;
-
+    
     newTr.classList.add('table_item')
     command.classList.add('command')
-
+    
     newTr.appendChild(command);
     newTr.appendChild(newTd1);
     newTr.appendChild(newTd2);
-
+    
     table.appendChild(newTr);
+    
+    tr = document.querySelectorAll('.table_item')
 }
 function selectItem(e) {
     let comm ="";
@@ -62,7 +84,7 @@ function selectItem(e) {
 
     const currentData = res.filter((e) => e.name == `${comm}`);
     
-    console.log( "currentData:", currentData);
+    //console.log( "currentData:", currentData);
     showDetails(currentData);
 }
 function showDetails(data) {
@@ -114,6 +136,7 @@ function showDetails(data) {
     input_id.addEventListener('input', calculate);
     openInput.addEventListener('input', calculate);
     dInputs.forEach( e => e.addEventListener('input', calculate));
+
 
     function calculate(){
         if(hasFixedValues && !hasSubCmd && dataLength) {

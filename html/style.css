@@ -2,7 +2,13 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-
+.over {
+    background-color: rgba(59, 59, 59, 0.2) ;
+}
+.selected {
+    background-color: black;
+    color: white;
+}
 .header {
     text-align: center;
     font-size: 1.5em;
@@ -31,7 +37,7 @@ table {
 
 td {
     border-bottom: 1px solid black;
-    padding: 5px 0;
+    padding: 5px 10px;
 }
 
 .table_title {
