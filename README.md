@@ -6,6 +6,7 @@ No Support
 
 ## Description
 Feel free to use this simple Samsung MDC tool to generate HEX commands to use with Samsung Smart Signage Devices.
+working demo here : https://mdc.sesg.ch 
 
 ## How to Start
 clone this repo to your local workspace

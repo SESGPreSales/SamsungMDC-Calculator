@@ -107,8 +107,8 @@ text-align: center;
 
 .fixed-inputs {
     font-family: 'Courier New', Courier, monospace;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
     width: 95%;
 
 }
@@ -121,6 +121,12 @@ text-align: center;
 .selects {
     margin-top: 0px;
 }
+.image_div {
+    margin: 25px 0;
+    display: flex;
+    justify-content: center;
+}
+
 .footer p {
     margin: 0;
 }
