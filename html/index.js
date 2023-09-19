@@ -70,12 +70,14 @@ function showDetails(data) {
     let hasFixedValues = data[0].hasfixedvalues || false;
     let hasSubCmd = data[0].hassubcmd || false;
     let subCmd = data[0].subcmd || "";
-    let dataLength = data[0].datalength === "variable" ? null : data[0].datalength;
+    let dataLength = data[0].datalength === "variable" ? null : parseInt(data[0].datalength,16);
     let image = data[0].image;
     let command = data[0].command;
     let values = data[0].values || [] ;
     let moreInfo = data[0].moreinfo || "";
     let outData = [];
+
+    //INFO: using parseInt(datalength, 16) to convert HEX to DEC
 
     //showing or hidding parts based on selectors:
         //hide all d input fields as long as they arent needed
@@ -121,10 +123,11 @@ function showDetails(data) {
             if (neededFiels == 0) showHEX(outData)
             if (neededFiels > 0) {
                 for (let i=1; i<=neededFiels; i++) { 
-                    let val = document.querySelector('#d'+i).innerText;
-                    outData.push(two(val.charCodeAt().toString(16)))
-                    showHEX(outData)
+                    let val = document.querySelector('#d'+i).value;
+                    let hexString= parseInt(val).toString(16).toUpperCase();
+                    outData.push(two(hexString)) 
                 }
+                showHEX(outData)
             }
         }       
         if(hasFixedValues && hasSubCmd && dataLength) {
@@ -135,10 +138,11 @@ function showDetails(data) {
             if (neededFiels == 0) showHEX(outData)
             if (neededFiels > 0) {
                 for (let i=1; i<=neededFiels; i++) { 
-                    let val = document.querySelector('#d'+i).innerText;
-                    outData.push(two(val.charCodeAt().toString(16)))
-                    showHEX(outData)
+                    let val = document.querySelector('#d'+i).value;
+                    let hexString= parseInt(val).toString(16).toUpperCase();
+                    outData.push(two(hexString)) 
                 }
+                showHEX(outData)
             }
         }      
         if(!hasFixedValues && hasSubCmd && !dataLength) {
@@ -171,10 +175,15 @@ function showDetails(data) {
             if (neededFiels > 0) {
                 for (let i=1; i<=neededFiels; i++) { 
                     let val = document.querySelector('#d'+i).value;
-                    outData.push(two(val.charCodeAt().toString(16))) }
-                showHEX(outData);
+                    let hexString= parseInt(val).toString(16).toUpperCase();
+                    outData.push(two(hexString)) 
+                }
+                showHEX(outData)
             }
         }
+        
+        //this is the working thing for the Network Configuration thing. not working.
+
         if(!hasFixedValues && hasSubCmd && dataLength) {
             
             outData = [command, input_id.value,two(dataLength), subCmd]
@@ -183,8 +192,10 @@ function showDetails(data) {
             if (neededFiels > 0) {
                 for (let i=1; i<=neededFiels; i++) { 
                     let val = document.querySelector('#d'+i).value;
-                    outData.push(two(val.charCodeAt().toString(16))) }
-                    showHEX(outData)
+                    let hexString= parseInt(val).toString(16).toUpperCase();
+                    outData.push(two(hexString)) 
+                }
+                showHEX(outData)
             }
 
         }
