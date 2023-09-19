@@ -4,6 +4,7 @@ const req = new XMLHttpRequest;
 let res = new Object;
 let hexOutputArray = [];
 const version = "Version 0.9 beta"
+
 //selectors
 const table = document.querySelector('.main_table');
 const hexoutputFinal = document.querySelector('.result h1');
@@ -21,28 +22,8 @@ const appVersion = document.querySelector('.header p');
 //eventlisteners
 table.addEventListener('click', selectItem );
 search.addEventListener('input', filter);
-appVersion.innerText = version;
+
 let tr = [];
-
-
-function hover() {
-    tr.forEach( e => e.addEventListener('mouseover', changeBg ));
-    tr.forEach( e => e.addEventListener('mouseout', changeBg ));
-    tr.forEach( e => e.addEventListener('click', changeBgFix ));
-};
-
-function changeBg(e) {
-    const item = e.target;
-    const itemParent = item.parentElement
-    itemParent.classList.toggle('over')
-}
-
-function changeBgFix(e) {
-    const item = e.target;
-    tr.forEach( e => e.classList.remove('selected'));
-    const itemParent = item.parentElement ;
-    itemParent.classList.add('selected');
-}
 
 function getData() {
     
