@@ -17,3 +17,9 @@ cd SamsungMDC-Calculator
 Then run docker container with `docker compose up -d`
 
 Open `http://localhost` on your browser to use the calculator.
+
+How to update for newer version: 
+````
+git pull
+docker compose up -d --build
+````
