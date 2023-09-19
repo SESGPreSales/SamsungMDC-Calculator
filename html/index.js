@@ -3,7 +3,7 @@
 const req = new XMLHttpRequest;
 let res = new Object;
 let hexOutputArray = [];
-const version = "Version 0.9 beta"
+const version = "Version 0.9.2"
 
 //selectors
 const table = document.querySelector('.main_table');
@@ -122,7 +122,7 @@ function showDetails(data) {
     function calculate(){
         if(hasFixedValues && !hasSubCmd && dataLength) {
             // calculate if openInput fiels are needes (-1 because this is from the selector)
-            outData = [command, input_id.value,two(dataLength),selects.value]
+            outData = [command, two(input_id.value),two(dataLength),selects.value]
 
             if (neededFiels == 0) showHEX(outData)
             if (neededFiels > 0) {
@@ -137,7 +137,7 @@ function showDetails(data) {
         if(hasFixedValues && hasSubCmd && dataLength) {
             // console.log("Case2: fixed values AND subCmd")
             
-            outData = [command, input_id.value,two(dataLength), subCmd ,selects.value]
+            outData = [command, two(input_id.value),two(dataLength), subCmd ,selects.value]
             
             if (neededFiels == 0) showHEX(outData)
             if (neededFiels > 0) {
@@ -153,7 +153,7 @@ function showDetails(data) {
             
             let openVal = openInput.value; 
 
-            outData = [command, input_id.value, two((openVal.length + 1).toString(16)), subCmd];
+            outData = [command, two(input_id.value), two((openVal.length + 1).toString(16)), subCmd];
             
             Array.from(openVal).forEach( e => {
                 let val = two(e.charCodeAt().toString(16).toUpperCase());
@@ -165,7 +165,7 @@ function showDetails(data) {
             
             let openVal = openInput.value; 
 
-            outData = [command, input_id.value, two((openVal.length).toString(16))];
+            outData = [command, two(input_id.value), two((openVal.length).toString(16))];
             
             Array.from(openVal).forEach( e => {
                 let val = two(e.charCodeAt().toString(16).toUpperCase());
@@ -174,7 +174,7 @@ function showDetails(data) {
             showHEX(outData);
         }   
         if(!hasFixedValues && !hasSubCmd && dataLength)  {
-            outData = [command, input_id.value,two(dataLength)]
+            outData = [command, two(input_id.value),two(dataLength)]
 
             if (neededFiels == 0) showHEX(outData)
             if (neededFiels > 0) {
@@ -191,7 +191,7 @@ function showDetails(data) {
 
         if(!hasFixedValues && hasSubCmd && dataLength) {
             
-            outData = [command, input_id.value,two(dataLength), subCmd]
+            outData = [command, two(input_id.value),two(dataLength), subCmd]
 
             if (neededFiels == 0) showHEX(outData)
             if (neededFiels > 0) {
