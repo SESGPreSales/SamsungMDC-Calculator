@@ -5,10 +5,11 @@ Provided as is - Please audit the code before using it.
 No Support
 
 ## Description
-Feel free to use this simple Samsung MDC calculator 
+Feel free to use this simple Samsung MDC tool to generate HEX commands to use with Samsung Smart Signage Devices.
 
 ## How to Start
 clone this repo to your local workspace
 ````
-git clone https://github.com/TBEMSESG/MDCandEventTriggerController.git
+git clone https://github.com/TBEMSESG/SamsungMDC-Calculator.git
+
 ````
