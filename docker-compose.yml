@@ -10,7 +10,7 @@ services:
       - traefik-proxy
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.mdc.rule=Host(`mdc.sesg.ch`)"
+      - "traefik.http.routers.mdc.rule=Host(`mdc.examle.com`)"
       - "traefik.http.services.mdc.loadbalancer.server.port=80"
       - "traefik.http.routers.mdc.tls.certresolver=le"
       - "traefik.http.middlewares.mdc.redirectscheme.scheme=https"
