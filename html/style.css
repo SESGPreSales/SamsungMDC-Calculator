@@ -113,7 +113,12 @@ text-align: center;
 
 .result>h1 {
     text-align: center;
-    font-size: 4em;
+    font-size: 2em;
+}
+@media screen and (min-width: 700px) {
+        .result>h1 {
+        font-size: 3.5em;
+    }
 }
 
 .fixed-inputs {
@@ -132,11 +137,22 @@ text-align: center;
 .selects {
     margin-top: 0px;
 }
+.section_image {
+    display:none;
+}
 .image_div {
     margin: 25px 0;
     display: flex;
     justify-content: center;
+    flex-shrink: 8;
 }
+@media screen and (min-width: 800px) {
+.section_image {
+    display: block;
+}
+}
+
+
 
 .footer p {
     margin: 0;
