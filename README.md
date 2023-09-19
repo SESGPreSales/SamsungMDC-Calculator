@@ -11,5 +11,4 @@ Feel free to use this simple Samsung MDC tool to generate HEX commands to use wi
 clone this repo to your local workspace
 ````
 git clone https://github.com/TBEMSESG/SamsungMDC-Calculator.git
-
 ````
