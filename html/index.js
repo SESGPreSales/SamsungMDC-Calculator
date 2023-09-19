@@ -3,6 +3,7 @@
 const req = new XMLHttpRequest;
 let res = new Object;
 let hexOutputArray = [];
+const version = "Version 0.9 beta"
 //selectors
 const table = document.querySelector('.main_table');
 const hexoutputFinal = document.querySelector('.result h1');
@@ -20,6 +21,9 @@ const search = document.querySelector('.search-input');
 //eventlisteners
 table.addEventListener('click', selectItem );
 search.addEventListener('input', filter);
+appVersion = document.querySelector('.header p');
+
+appVersion.innerText = version;
 
 function getData() {
 
@@ -107,6 +111,7 @@ function showDetails(data) {
     selects.addEventListener('input', calculate);
     input_id.addEventListener('input', calculate);
     openInput.addEventListener('input', calculate);
+    dInputs.forEach( e => e.addEventListener('input', calculate));
 
     function calculate(){
         if(hasFixedValues && !hasSubCmd && dataLength) {
@@ -115,8 +120,11 @@ function showDetails(data) {
 
             if (neededFiels == 0) showHEX(outData)
             if (neededFiels > 0) {
-                for (let i=1; i<=neededFiels; i++) { outData.push(document.querySelector('#d'+i).value) }
-                showHEX(outData);
+                for (let i=1; i<=neededFiels; i++) { 
+                    let val = document.querySelector('#d'+i).innerText;
+                    outData.push(two(val.charCodeAt().toString(16)))
+                    showHEX(outData)
+                }
             }
         }       
         if(hasFixedValues && hasSubCmd && dataLength) {
@@ -126,8 +134,11 @@ function showDetails(data) {
             
             if (neededFiels == 0) showHEX(outData)
             if (neededFiels > 0) {
-                for (let i=1; i<=neededFiels; i++) { outData.push(document.querySelector('#d'+i).value) }
-                showHEX(outData);
+                for (let i=1; i<=neededFiels; i++) { 
+                    let val = document.querySelector('#d'+i).innerText;
+                    outData.push(two(val.charCodeAt().toString(16)))
+                    showHEX(outData)
+                }
             }
         }      
         if(!hasFixedValues && hasSubCmd && !dataLength) {
@@ -158,7 +169,9 @@ function showDetails(data) {
 
             if (neededFiels == 0) showHEX(outData)
             if (neededFiels > 0) {
-                for (let i=1; i<=neededFiels; i++) { outData.push(document.querySelector('#d'+i).value) }
+                for (let i=1; i<=neededFiels; i++) { 
+                    let val = document.querySelector('#d'+i).value;
+                    outData.push(two(val.charCodeAt().toString(16))) }
                 showHEX(outData);
             }
         }
@@ -168,8 +181,10 @@ function showDetails(data) {
 
             if (neededFiels == 0) showHEX(outData)
             if (neededFiels > 0) {
-                for (let i=1; i<=neededFiels; i++) { outData.push(document.querySelector('#d'+i).value) }
-                showHEX(outData);
+                for (let i=1; i<=neededFiels; i++) { 
+                    let val = document.querySelector('#d'+i).value;
+                    outData.push(two(val.charCodeAt().toString(16))) }
+                    showHEX(outData)
             }
 
         }
@@ -198,6 +213,29 @@ function removeAllChildNodes(parent) {
         parent.removeChild(parent.firstChild);
     }
 }
+//filter Table by Name
+function filter() {
+    // Declare variables
+    var input, filter, tr, td, i, txtValue;
+    input = search;
+    filter = input.value.toUpperCase();
+    console.log(filter)
+    tr = table.querySelectorAll(".table_item");
+    
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].querySelectorAll('td')[1];
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            console.log(txtValue)
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}
 // Adds AA and the checksum to the HEX and shows the result 
 function showHEX(val) {
     
@@ -213,29 +251,5 @@ function showHEX(val) {
     hexoutputFinal.innerText = outputresult;
     
 }
-//filter Table by Name
-function filter() {
- // Declare variables
- var input, filter, tr, td, i, txtValue;
- input = search;
- filter = input.value.toUpperCase();
- console.log(filter)
- tr = table.querySelectorAll(".table_item");
-
- // Loop through all table rows, and hide those who don't match the search query
- for (i = 0; i < tr.length; i++) {
-   td = tr[i].querySelectorAll('td')[1];
-   if (td) {
-     txtValue = td.textContent || td.innerText;
-     console.log(txtValue)
-     if (txtValue.toUpperCase().indexOf(filter) > -1) {
-       tr[i].style.display = "";
-     } else {
-       tr[i].style.display = "none";
-     }
-   }
- }
-}
-
 // Data from JSON is fetched once on pageload
 getData();

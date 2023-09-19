@@ -121,3 +121,10 @@ text-align: center;
 .selects {
     margin-top: 0px;
 }
+.footer p {
+    margin: 0;
+}
+
+.footer {
+    margin-top: 10px;
+}
