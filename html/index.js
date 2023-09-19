@@ -23,7 +23,7 @@ search.addEventListener('input', filter);
 
 function getData() {
 
-    req.open('get','../data/mdc.commands.json')
+    req.open('get','./data/mdc.commands.json')
     req.onload = () => {
          res = JSON.parse(req.response);
         // console.log(res)
