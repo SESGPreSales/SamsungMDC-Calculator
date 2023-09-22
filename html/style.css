@@ -59,6 +59,9 @@ td {
 .table_title {
 font-weight: bold;
 text-align: center;
+position: sticky;
+top: 0;
+background-color: white;
 }
 
 .section_result, .section_image {
@@ -184,4 +187,8 @@ text-align: center;
 
 .footer {
     margin-top: 10px;
+}
+
+.open_input {
+    height: 2em;
 }
