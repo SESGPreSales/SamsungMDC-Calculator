@@ -28,6 +28,22 @@ box-shadow: 0px 0px 50px rgba(59, 59, 59, 0.5);
     margin: 0 5px 0 0 ;
 }
 
+.main_table_div{
+    position: relative;
+}
+.popup{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px dotted black;
+    border-radius: 5px;
+    width: 250px;
+    text-align: center;
+    box-shadow: 0px 0px 50px rgba(59, 59, 59, 1);
+}
+
 table {
     display: block;
     height: 400px;

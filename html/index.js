@@ -19,11 +19,19 @@ const dInputs = document.querySelectorAll('.d');
 const imagediv = document.querySelector('.image');
 const search = document.querySelector('.search-input');
 const appVersion = document.querySelector('.header p');
+const popup = document.querySelector('.popup');
+
+
+
 //eventlisteners
 table.addEventListener('click', selectItem );
 search.addEventListener('input', filter);
 
 let tr = [];
+
+function removePopup () {
+    popup.classList.add('hidden')
+}
 
 function getData() {
     
@@ -33,6 +41,7 @@ function getData() {
         // console.log(res)
         res.forEach(e => createTable(e));
         hover();
+        removePopup();
     }
     req.send();
 }
