@@ -19,3 +19,6 @@ function changeBgFix(e) {
     const itemParent = item.parentElement ;
     itemParent.classList.add('selected');
 }
+function removePopup () {
+    popup.classList.add('hidden')
+}

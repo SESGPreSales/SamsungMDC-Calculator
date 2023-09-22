@@ -29,9 +29,6 @@ search.addEventListener('input', filter);
 
 let tr = [];
 
-function removePopup () {
-    popup.classList.add('hidden')
-}
 
 function getData() {
     
