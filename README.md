@@ -5,15 +5,15 @@ Provided as is - Please audit the code before using it.
 No Support
 
 ## Description
-Feel free to use this simple Samsung MDC tool to generate HEX commands to use with Samsung Smart Signage Devices.
-working demo here : https://mdc.sesg.ch 
+Feel free to use this simple Samsung MDC tool to generate HEX commands to be used with Samsung Smart Signage Devices.
+working demo here: https://mdc.sesg.ch 
 
 ## How it works
-The app is composed by three containers, started using docker compose (has to be already installed on the host).
+The app is composed of three containers, started using docker compose (has to be already installed on the host).
 
 - `db` hosts the data
 - `backend` provides an API to query the database.
-- `frontend` serves static HTML, JavaScript and CSS. 
+- `frontend` serves static HTML, JavaScript, and CSS. 
 
 ## How to Start
 clone this repo to your local workspace
@@ -33,7 +33,8 @@ docker compose up -d --build
 ````
 
 ## How to customize
-The frontend is running on the default port 80. In case that port is already in use, feel free to modify the `docker-compose.yml` file to your setup. Change `- "80:80"` to whatever best fits:
+The frontend is running on the default port 80. If that port is already in use, please modify the `docker-compose.yml` file to your setup. Change `- "80:80"` to whatever best fits:
+
 ```
   frontend:
     build: ./frontend/
