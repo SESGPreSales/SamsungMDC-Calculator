@@ -8,8 +8,8 @@ No Support
 Feel free to use this simple Samsung MDC tool to generate HEX commands to use with Samsung Smart Signage Devices.
 working demo here : https://mdc.sesg.ch 
 
-## How it work
-The app is composed of three containers, startd using docker compose (needed already installed on the host).
+## How it works
+The app is composed by three containers, started using docker compose (has to be already installed on the host).
 
 - `db` hosts the data
 - `backend` provides an API to query the database.
@@ -33,12 +33,12 @@ docker compose up -d --build
 ````
 
 ## How to customize
-The frontend is running on the default port 80. In case the port is already in use, feel free to modify the `docker-compose.yml` file:
+The frontend is running on the default port 80. In case that port is already in use, feel free to modify the `docker-compose.yml` file to your setup. Change `- "80:80"` to whatever best fits:
 ```
   frontend:
     build: ./frontend/
     ports:
-      - **"8081**:80"
+      - "8081:80"
     restart: always
     volumes:
       - ./frontend/html:/usr/share/nginx/html
