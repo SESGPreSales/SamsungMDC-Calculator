@@ -1,8 +1,13 @@
 version: '3'
 
 services:
+  db:
+    build: /db/.
+    ports:
+      - "27017:27017"
+
   calculator:
-    build: .
+    build: /html/.
     ports:
       - "80"
     restart: always
