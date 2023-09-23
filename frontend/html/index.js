@@ -3,7 +3,7 @@
 const req = new XMLHttpRequest;
 let res = new Object;
 let hexOutputArray = [];
-const version = "Version 0.9.2"
+const version = "Version 1.0.0"
 
 //selectors
 const table = document.querySelector('.main_table');
@@ -33,7 +33,7 @@ let tr = [];
 function getData() {
     
     // Define the URL to fetch the data from
-    const url = "http://localhost:3000/tablecontent";
+    const url = "/api/tablecontent";
 
 // Perform the fetch
     fetch(url)
@@ -80,7 +80,7 @@ function createTable(e){
 
 function fetchDetails(val) {
 // Perform the fetch
-fetch(`http://localhost:3000/tablecontent/${val}`)
+fetch(`/api/tablecontent/${val}`)
 .then((response) => {
     // Check if the fetch was successful
     if (!response.ok) {
