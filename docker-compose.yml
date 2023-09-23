@@ -15,7 +15,7 @@ services:
     ports:
       - "3000"
 
-  calculator:
+  frontend:
     build: ./frontend/
     ports:
       - "80:80"
