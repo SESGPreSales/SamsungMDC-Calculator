@@ -1,8 +1,11 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
+
 const {MongoClient , ObjectId } = require('mongodb');
 
 const uri = "mongodb://admin:mdcpassword@db:27017";
+app.use(cors());
 
 async function run() {
     let res = [];
@@ -19,7 +22,7 @@ async function run() {
       // Sort returned documents in ascending order by title (A->Z)
       sort: { name: 1 },
       // Include only the `title` and `imdb` fields in each returned document
-      projection: { _id: 1,name: 1, Description: 1 }
+      projection: { _id: 1, name: 1, Description: 1 }
     };
     // Execute query 
     const cursor = commands.find(query, options);
@@ -75,7 +78,7 @@ async function details(val) {
 
 app.get('/tablecontent', function (req, res) {
     run().then((result) => {
-        res.status(901).send(result);
+        res.status(200).send(result);
     }).catch((error) => {
         console.error(error);
         res.status(500).send('Internal Server Error');
@@ -85,7 +88,7 @@ app.get('/tablecontent', function (req, res) {
 
 app.get('/tablecontent/:id', function (req, res) {
     details(req.params.id).then((result) => {
-        res.status(901).send(result);
+        res.status(200).send(result);
     }).catch((error) => {
         console.error(error);
         res.status(500).send('Internal Server Error');

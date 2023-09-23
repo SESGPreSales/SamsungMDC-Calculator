@@ -32,15 +32,27 @@ let tr = [];
 
 function getData() {
     
-    req.open('get','./data/mdc.commands.json')
-    req.onload = () => {
-        res = JSON.parse(req.response);
-        // console.log(res)
-        res.forEach(e => createTable(e));
-        hover();
-        removePopup();
-    }
-    req.send();
+    // Define the URL to fetch the data from
+    const url = "http://localhost:3000/tablecontent";
+
+// Perform the fetch
+    fetch(url)
+    .then((response) => {
+        // Check if the fetch was successful
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+        console.log(res)
+        return response.json();
+    })
+    .then( (data) => {
+        data.forEach(e => createTable(e));
+            hover();
+            removePopup();
+    })
+    .catch((error) => {
+        console.error('Fetch error!!!:', error);
+      });
 }
 function createTable(e){ 
     
@@ -50,7 +62,7 @@ function createTable(e){
     const newTd1 = document.createElement('td');
     const newTd2 = document.createElement('td');
     
-    command.innerText= e.command;
+    command.innerText= e._id;
     newTd1.innerText= e.name;
     newTd2.innerText= e.Description;
     
@@ -65,14 +77,33 @@ function createTable(e){
     
     tr = document.querySelectorAll('.table_item')
 }
+
+function fetchDetails(val) {
+// Perform the fetch
+fetch(`http://localhost:3000/tablecontent/${val}`)
+.then((response) => {
+    // Check if the fetch was successful
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+    console.log(res)
+    return response.json();
+})
+.then((data) => {
+    console.log( "currentData:", data);
+    showDetails(data);
+})
+.catch((error) => {
+    console.error('Fetch error!!!:', error);
+  });
+}
+
 function selectItem(e) {
     let comm ="";
-    comm = e.target.parentElement.childNodes[1].innerText;
+    comm = e.target.parentElement.childNodes[0].innerText;
+    console.log(comm)
 
-    const currentData = res.filter((e) => e.name == `${comm}`);
-    
-    //console.log( "currentData:", currentData);
-    showDetails(currentData);
+    fetchDetails(comm);
 }
 function showDetails(data) {
     //get all needed data
