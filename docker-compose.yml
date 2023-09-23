@@ -8,11 +8,20 @@ services:
     ports:
       - "27017:27017"
 
+  backend:
+    build: /backend/.
+    # networks:
+    #   - traefik-proxy
+    ports:
+      - "3000:3000"
+
   calculator:
     build: /frontend/.
     ports:
-      - "80"
+      - "80:80"
     restart: always
+    volumes:
+      - .html/:/usr/share/nginx/html
     # networks:
     #   - traefik-proxy
     # labels:
