@@ -1,5 +1,10 @@
 appVersion.innerText = version;
 
+// checkbox.addEventListener("change", function(){
+//     let isChecked = false;
+//     isChecked = isChecked ? false : true;
+//     console.log(isChecked)
+//     })
 
 function hover() {
     tr.forEach( e => e.addEventListener('mouseover', changeBg ));

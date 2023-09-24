@@ -20,7 +20,8 @@ const imagediv = document.querySelector('.image');
 const search = document.querySelector('.search-input');
 const appVersion = document.querySelector('.header p');
 const popup = document.querySelector('.popup');
-
+const checkbox = document.querySelector('.switch input');
+console.log(checkbox.checked)
 
 
 //eventlisteners
@@ -116,10 +117,18 @@ function showDetails(data) {
     let values = data[0].values || [] ;
     let moreInfo = data[0].moreinfo || "";
     let outData = [];
-
+    let canSet = data[0].canSet || false;
     //INFO: using parseInt(datalength, 16) to convert HEX to DEC
 
     //showing or hidding parts based on selectors:
+        if (canSet) {
+            checkbox.checked = true;
+            checkbox.disabled=false;
+
+        } else {
+            checkbox.checked = false;
+            checkbox.disabled= true;
+        }
         //hide all d input fields as long as they arent needed
         document.querySelectorAll('.d-div').forEach(e => e.classList.add('hidden'));
         document.querySelector('.open').classList.add('hidden');
