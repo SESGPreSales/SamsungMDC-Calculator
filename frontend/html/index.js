@@ -3,7 +3,7 @@
 const req = new XMLHttpRequest;
 let res = new Object;
 let hexOutputArray = [];
-const version = "Version 1.0.0"
+const version = "Version 1.0.1"
 
 //selectors
 const table = document.querySelector('.main_table');
@@ -20,13 +20,14 @@ const imagediv = document.querySelector('.image');
 const search = document.querySelector('.search-input');
 const appVersion = document.querySelector('.header p');
 const popup = document.querySelector('.popup');
+// const checkbox = checkbox1.checked;
 const checkbox = document.querySelector('.switch input');
-console.log(checkbox.checked)
 
 
 //eventlisteners
 table.addEventListener('click', selectItem );
 search.addEventListener('input', filter);
+
 
 let tr = [];
 
@@ -35,25 +36,25 @@ function getData() {
     
     // Define the URL to fetch the data from
     const url = "/api/tablecontent";
-
-// Perform the fetch
+    
+    // Perform the fetch
     fetch(url)
     .then((response) => {
         // Check if the fetch was successful
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-        console.log(res)
+        }
+        //console.log(res)
         return response.json();
     })
     .then( (data) => {
         data.forEach(e => createTable(e));
-            hover();
-            removePopup();
+        hover();
+        removePopup();
     })
     .catch((error) => {
         console.error('Fetch error!!!:', error);
-      });
+    });
 }
 function createTable(e){ 
     
@@ -78,34 +79,33 @@ function createTable(e){
     
     tr = document.querySelectorAll('.table_item')
 }
-
+function selectItem(e) {
+    let comm ="";
+    comm = e.target.parentElement.childNodes[0].innerText;
+    //console.log(comm)
+    
+    fetchDetails(comm);
+}
 function fetchDetails(val) {
-// Perform the fetch
-fetch(`/api/tablecontent/${val}`)
-.then((response) => {
-    // Check if the fetch was successful
-    if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+
+    fetch(`/api/tablecontent/${val}`)
+    .then((response) => {
+        // Check if the fetch was successful
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
         }
-    console.log(res)
+        //console.log(res)
     return response.json();
 })
 .then((data) => {
-    console.log( "currentData:", data);
+    // console.log( "currentData:", data);
     showDetails(data);
 })
 .catch((error) => {
     console.error('Fetch error!!!:', error);
-  });
+});
 }
 
-function selectItem(e) {
-    let comm ="";
-    comm = e.target.parentElement.childNodes[0].innerText;
-    console.log(comm)
-
-    fetchDetails(comm);
-}
 function showDetails(data) {
     //get all needed data
     let hasFixedValues = data[0].hasfixedvalues || false;
@@ -119,37 +119,67 @@ function showDetails(data) {
     let outData = [];
     let canSet = data[0].canSet || false;
     //INFO: using parseInt(datalength, 16) to convert HEX to DEC
-
+    
+    checkbox.addEventListener('change', showSetDetails)
+    
     //showing or hidding parts based on selectors:
-        if (canSet) {
-            checkbox.checked = true;
-            checkbox.disabled=false;
-
-        } else {
-            checkbox.checked = false;
-            checkbox.disabled= true;
-        }
+    
+    if (canSet) {
+        checkbox.checked = true;
+        checkbox.disabled =false;        
+    } else {
+        checkbox.checked = false;
+        checkbox.disabled= true;
+    }
+    //show inputField for non fixed values
+    let neededFiels ="";
+    
+    function showSetDetails() {
+        dataLength = data[0].datalength === "variable" ? null : parseInt(data[0].datalength,16);
         //hide all d input fields as long as they arent needed
         document.querySelectorAll('.d-div').forEach(e => e.classList.add('hidden'));
         document.querySelector('.open').classList.add('hidden');
-        //show Fixed Value Selector and refresh Options
-        hasFixedValues ? (createOptionsSelect(values), selectsFull.classList.remove('hidden')): selectsFull.classList.add('hidden')
+        //hasFixedValues ? (createOptionsSelect(values), selectsFull.classList.remove('hidden')): selectsFull.classList.add('hidden')
         //show or remove the more info box
         moreInfo ? moreinfo.classList.remove('hidden') : moreinfo.classList.add('hidden')
-        //show inputField for non fixed values
         
-        let neededFiels ="";
+        if (checkbox.checked) {
+            if(hasFixedValues) {
+                //show Fixed Value Selector and refresh Options
+                createOptionsSelect(values);
+                selectsFull.classList.remove('hidden'); 
+                // add needed elements for Set sitation
+                neededFiels = !hasSubCmd ? dataLength -1 : dataLength -2
+                } 
+                else {
+                    selectsFull.classList.add('hidden');
+                    neededFiels = !hasSubCmd ? dataLength : dataLength -1} ;   //create if to decide when to remove 1 or 2 based on hasSubCmd
+            }
+        else {
+            neededFiels = "0"; 
+            hasSubCmd ? dataLength = "01" : dataLength = "00";
+            // remove unused elements for get sitation
+            document.querySelector('.open').classList.add('hidden');
+            openInput.classList.add('hidden')
+            selectsFull.classList.add('hidden')
+        }
 
-        if(hasFixedValues) { neededFiels = !hasSubCmd ? dataLength -1 : dataLength -2} 
-        else {neededFiels = !hasSubCmd ? dataLength : dataLength -1} ;   //create if to decide when to remove 1 or 2 based on hasSubCmd
+        console.log('needed Fields: ',neededFiels)
+        
         if (neededFiels > 0) {
             for (let i=1; i <= neededFiels; i++) {
                 document.querySelector('.d'+i).classList.remove('hidden')
             }
         }
-
+        
         !dataLength ? document.querySelector('.open').classList.remove('hidden') : document.querySelector('.open').classList.add('hidden');
         // show
+        calculate();
+        
+    }
+    
+    showSetDetails();
+    calculate();
     
     // show already known Data:
     title.innerText = `Function: ${data[0].name}` ;
@@ -157,8 +187,8 @@ function showDetails(data) {
     moreinfo.innerText = moreInfo;
     imagediv.src = image;
 
-    calculate();
-    //Eventlisteners (fixed values, no subCmd)
+
+    //Eventlisteners 
     selects.addEventListener('input', calculate);
     input_id.addEventListener('input', calculate);
     openInput.addEventListener('input', calculate);
@@ -166,90 +196,114 @@ function showDetails(data) {
 
 
     function calculate(){
-        if(hasFixedValues && !hasSubCmd && dataLength) {
-            // calculate if openInput fiels are needes (-1 because this is from the selector)
-            outData = [command, two(input_id.value),two(dataLength),selects.value]
+        //
+        if (!checkbox.checked) {
+            if(!hasSubCmd) {
+                // calculate if openInput fiels are needes (-1 because this is from the selector)
+                outData = [command, two(input_id.value),'00']
 
-            if (neededFiels == 0) showHEX(outData)
-            if (neededFiels > 0) {
-                for (let i=1; i<=neededFiels; i++) { 
-                    let val = document.querySelector('#d'+i).value;
-                    let hexString= parseInt(val).toString(16).toUpperCase();
-                    outData.push(two(hexString)) 
+                if (neededFiels == 0) showHEX(outData)
+                if (neededFiels > 0) {
+                    for (let i=1; i<=neededFiels; i++) { 
+                        let val = document.querySelector('#d'+i).value;
+                        let hexString= parseInt(val).toString(16).toUpperCase();
+                        outData.push(two(hexString)) 
+                    }
+                    showHEX(outData)
                 }
+            }       
+            if(hasSubCmd) {
+                // calculate if openInput fiels are needes (-1 because this is from the selector)
+                outData = [command, two(input_id.value),'01']
                 showHEX(outData)
-            }
-        }       
-        if(hasFixedValues && hasSubCmd && dataLength) {
-            // console.log("Case2: fixed values AND subCmd")
-            
-            outData = [command, two(input_id.value),two(dataLength), subCmd ,selects.value]
-            
-            if (neededFiels == 0) showHEX(outData)
-            if (neededFiels > 0) {
-                for (let i=1; i<=neededFiels; i++) { 
-                    let val = document.querySelector('#d'+i).value;
-                    let hexString= parseInt(val).toString(16).toUpperCase();
-                    outData.push(two(hexString)) 
                 }
-                showHEX(outData)
-            }
-        }      
-        if(!hasFixedValues && hasSubCmd && !dataLength) {
-            
-            let openVal = openInput.value; 
-
-            outData = [command, two(input_id.value), two((openVal.length + 1).toString(16)), subCmd];
-            
-            Array.from(openVal).forEach( e => {
-                let val = two(e.charCodeAt().toString(16).toUpperCase());
-                outData.push(val);
-            })   
-            showHEX(outData);
-        }     
-        if(!hasFixedValues && !hasSubCmd && !dataLength) {
-            
-            let openVal = openInput.value; 
-
-            outData = [command, two(input_id.value), two((openVal.length).toString(16))];
-            
-            Array.from(openVal).forEach( e => {
-                let val = two(e.charCodeAt().toString(16).toUpperCase());
-                outData.push(val);
-            })   
-            showHEX(outData);
-        }   
-        if(!hasFixedValues && !hasSubCmd && dataLength)  {
-            outData = [command, two(input_id.value),two(dataLength)]
-
-            if (neededFiels == 0) showHEX(outData)
-            if (neededFiels > 0) {
-                for (let i=1; i<=neededFiels; i++) { 
-                    let val = document.querySelector('#d'+i).value;
-                    let hexString= parseInt(val).toString(16).toUpperCase();
-                    outData.push(two(hexString)) 
-                }
-                showHEX(outData)
-            }
-        }
+            } 
         
-        //this is the working thing for the Network Configuration thing. not working.
+        if (checkbox.checked) {
+            if(hasFixedValues && !hasSubCmd && dataLength) {
+                // calculate if openInput fiels are needes (-1 because this is from the selector)
+                outData = [command, two(input_id.value),two(dataLength),selects.value]
 
-        if(!hasFixedValues && hasSubCmd && dataLength) {
-            
-            outData = [command, two(input_id.value),two(dataLength), subCmd]
-
-            if (neededFiels == 0) showHEX(outData)
-            if (neededFiels > 0) {
-                for (let i=1; i<=neededFiels; i++) { 
-                    let val = document.querySelector('#d'+i).value;
-                    let hexString= parseInt(val).toString(16).toUpperCase();
-                    outData.push(two(hexString)) 
+                if (neededFiels == 0) showHEX(outData)
+                if (neededFiels > 0) {
+                    for (let i=1; i<=neededFiels; i++) { 
+                        let val = document.querySelector('#d'+i).value;
+                        let hexString= parseInt(val).toString(16).toUpperCase();
+                        outData.push(two(hexString)) 
+                    }
+                    showHEX(outData)
                 }
-                showHEX(outData)
+            }       
+            if(hasFixedValues && hasSubCmd && dataLength) {
+                // console.log("Case2: fixed values AND subCmd")
+                
+                outData = [command, two(input_id.value),two(dataLength), subCmd ,selects.value]
+                
+                if (neededFiels == 0) showHEX(outData)
+                if (neededFiels > 0) {
+                    for (let i=1; i<=neededFiels; i++) { 
+                        let val = document.querySelector('#d'+i).value;
+                        let hexString= parseInt(val).toString(16).toUpperCase();
+                        outData.push(two(hexString)) 
+                    }
+                    showHEX(outData)
+                }
+            }      
+            if(!hasFixedValues && hasSubCmd && !dataLength) {
+                
+                let openVal = openInput.value; 
+
+                outData = [command, two(input_id.value), two((openVal.length + 1).toString(16)), subCmd];
+                
+                Array.from(openVal).forEach( e => {
+                    let val = two(e.charCodeAt().toString(16).toUpperCase());
+                    outData.push(val);
+                })   
+                showHEX(outData);
+            }     
+            if(!hasFixedValues && !hasSubCmd && !dataLength) {
+                
+                let openVal = openInput.value; 
+
+                outData = [command, two(input_id.value), two((openVal.length).toString(16))];
+                
+                Array.from(openVal).forEach( e => {
+                    let val = two(e.charCodeAt().toString(16).toUpperCase());
+                    outData.push(val);
+                })   
+                showHEX(outData);
+            }   
+            if(!hasFixedValues && !hasSubCmd && dataLength)  {
+                outData = [command, two(input_id.value),two(dataLength)]
+
+                if (neededFiels == 0) showHEX(outData)
+                if (neededFiels > 0) {
+                    for (let i=1; i<=neededFiels; i++) { 
+                        let val = document.querySelector('#d'+i).value;
+                        let hexString= parseInt(val).toString(16).toUpperCase();
+                        outData.push(two(hexString)) 
+                    }
+                    showHEX(outData)
+                }
+            }
+            
+            //this is the working thing for the Network Configuration thing. not working.
+
+            if(!hasFixedValues && hasSubCmd && dataLength) {
+                
+                outData = [command, two(input_id.value),two(dataLength), subCmd]
+
+                if (neededFiels == 0) showHEX(outData)
+                if (neededFiels > 0) {
+                    for (let i=1; i<=neededFiels; i++) { 
+                        let val = document.querySelector('#d'+i).value;
+                        let hexString= parseInt(val).toString(16).toUpperCase();
+                        outData.push(two(hexString)) 
+                    }
+                    showHEX(outData)
             }
 
-        }
+        }}
     }; 
 };
 function two(val){
