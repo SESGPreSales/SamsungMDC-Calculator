@@ -149,6 +149,7 @@ function showDetails(data) {
                 createOptionsSelect(values);
                 selectsFull.classList.remove('hidden'); 
                 // add needed elements for Set sitation
+
                 neededFiels = !hasSubCmd ? dataLength -1 : dataLength -2
                 } 
                 else {
@@ -160,7 +161,7 @@ function showDetails(data) {
             hasSubCmd ? dataLength = "01" : dataLength = "00";
             // remove unused elements for get sitation
             document.querySelector('.open').classList.add('hidden');
-            openInput.classList.add('hidden')
+            //openInput.classList.add('hidden')
             selectsFull.classList.add('hidden')
         }
 
