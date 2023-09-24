@@ -215,7 +215,7 @@ function showDetails(data) {
             }       
             if(hasSubCmd) {
                 // calculate if openInput fiels are needes (-1 because this is from the selector)
-                outData = [command, two(input_id.value),'01']
+                outData = [command, two(input_id.value),'01', subCmd]
                 showHEX(outData)
                 }
             } 
