@@ -41,6 +41,5 @@ The frontend is running on the default port 80. If that port is already in use, 
     ports:
       - "8081:80"
     restart: always
-    volumes:
-      - ./frontend/html:/usr/share/nginx/html
+    
 ```
