@@ -9,7 +9,7 @@ Feel free to use this simple Samsung MDC tool to generate HEX commands to be use
 working demo here: https://mdc.sesg.ch 
 
 ## How it works
-The app is composed of three containers, started using docker compose (has to be already installed on the host).
+The app is composed of three containers, started using docker compose (has to be already installed on the host -> Get Docker here: https://docs.docker.com/engine/install/ )
 
 - `db` hosts the data
 - `backend` provides an API to query the database.
