@@ -3,7 +3,7 @@
 const req = new XMLHttpRequest;
 let res = new Object;
 let hexOutputArray = [];
-const version = "Version 1.0.2"
+const version = "Version 1.1.0"
 
 //selectors
 const table = document.querySelector('.main_table');
@@ -20,6 +20,7 @@ const imagediv = document.querySelector('.image');
 const search = document.querySelector('.search-input');
 const appVersion = document.querySelector('.header p');
 const popup = document.querySelector('.popup');
+const toClip = document.querySelector('.copy');
 // const checkbox = checkbox1.checked;
 const checkbox = document.querySelector('.switch input');
 
@@ -27,10 +28,17 @@ const checkbox = document.querySelector('.switch input');
 //eventlisteners
 table.addEventListener('click', selectItem );
 search.addEventListener('input', filter);
-
+toClip.addEventListener('click', toClipboard);
+toClip.addEventListener('mouseout', outFunc);
 
 let tr = [];
 
+if (hexoutputFinal.innerHTML == "") {
+    console.log('empty result')
+    toClip.classList.add('hidden')} 
+    else {
+        console.log('NOT empty result')
+        toClip.classList.remove('hidden')}
 
 function getData() {
     
@@ -105,8 +113,8 @@ function fetchDetails(val) {
     console.error('Fetch error!!!:', error);
 });
 }
-
 function showDetails(data) {
+    toClip.classList.remove('hidden')
     //get all needed data
     let hasFixedValues = data[0].hasfixedvalues || false;
     let hasSubCmd = data[0].hassubcmd || false;
@@ -302,6 +310,7 @@ function showDetails(data) {
                         outData.push(two(hexString)) 
                     }
                     showHEX(outData)
+                    
             }
 
         }}
@@ -367,6 +376,25 @@ function showHEX(val) {
     let outputresult = val.join(' ');
     hexoutputFinal.innerText = outputresult;
     
+}
+function toClipboard() {
+    // Get the text field
+    var copyText = hexoutputFinal.innerText;
+    console.log(copyText)
+    
+  
+     // Copy the text inside the text field
+    navigator.clipboard.writeText(copyText);
+  
+    // Alert the copied text
+      
+  var tooltip = document.getElementById("myTooltip");
+  tooltip.innerHTML = "Copied: </br>" + copyText;
+}
+
+function outFunc() {
+  var tooltip = document.getElementById("myTooltip");
+  tooltip.innerHTML = "Copy to clipboard";
 }
 // Data from JSON is fetched once on pageload
 getData();

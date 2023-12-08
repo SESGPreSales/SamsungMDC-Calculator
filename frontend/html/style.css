@@ -79,9 +79,7 @@ background-color: white;
     padding-left: 20px;
     padding-bottom: 20px;
 }
-.hidden, .command {
-    display:none;
-}
+
 
 .command_name p {
     font-weight: bold;
@@ -137,11 +135,12 @@ background-color: white;
 .result {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
 }
 
-.result>h2 {
+.copy {
     align-self: center;
+    margin-left: 50px;
 }
 .result>h1 {
     text-align: center;
@@ -153,7 +152,7 @@ background-color: white;
         .result>h1 {
         font-size: 3.5em;
     }
-}
+} 
 
 .fixed-inputs {
     font-family: 'Courier New', Courier, monospace;
@@ -268,3 +267,46 @@ background-color: white;
   .slider.round:before {
     border-radius: 50%;
   }
+
+/* Tooltip for copytoClipboard */
+
+  .tooltip {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 140px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -75px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+  }
+  
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+  .hidden, .command {
+    display:none;
+}
