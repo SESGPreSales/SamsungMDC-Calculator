@@ -40,7 +40,9 @@ services:
     restart: always
 
 ```
+Then run `docker compose up -d`
 
+Open `http://localhost` on your browser to use the calculator.
 
 ## How to Start - Build yourself: 
 clone this repo to your local workspace
