@@ -15,7 +15,34 @@ The app is composed of three containers, started using docker compose (has to be
 - `backend` provides an API to query the database.
 - `frontend` serves static HTML, JavaScript, and CSS. 
 
-## How to Start
+## How to Quickly Start
+create a docker-compose.yml file in your host
+```
+version: '3'
+
+services:
+  db:
+    image: ircnega/mdc_db:1.0.2
+    ports:
+      - "27017"
+    restart: always
+
+  backend:
+    image: ircnega/mdc_backend:1.1.0
+    ports:
+      - "3000"
+    restart: always
+
+  frontend:
+    image: ircnega/mdc_frontend:1.1.0
+    ports:
+      - "80:80"
+    restart: always
+
+```
+
+
+## How to Start - Build yourself: 
 clone this repo to your local workspace
 ````
 git clone https://github.com/TBEMSESG/SamsungMDC-Calculator.git
