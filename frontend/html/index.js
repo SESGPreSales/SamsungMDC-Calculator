@@ -3,7 +3,7 @@
 const req = new XMLHttpRequest;
 let res = new Object;
 let hexOutputArray = [];
-const version = "Version 1.1.0"
+const version = "Version 1.1.0 (db1.0.2)"
 
 //selectors
 const table = document.querySelector('.main_table');
