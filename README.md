@@ -22,8 +22,6 @@ The app is composed of three containers, started using docker compose (has to be
 create a docker-compose.yml file in your host
 
 ```
-version: '3'
-
 services:
   db:
     image: ircnega/mdc_db:1.0.3
@@ -32,13 +30,13 @@ services:
     restart: always
 
   backend:
-    image: ircnega/mdc_backend:1.1.0
+    image: ircnega/mdc_backend:1.1.1
     ports:
       - "3000"
     restart: always
 
   frontend:
-    image: ircnega/mdc_frontend:1.1.0
+    image: ircnega/mdc_frontend:1.1.1
     ports:
       - "80:80"
     restart: always

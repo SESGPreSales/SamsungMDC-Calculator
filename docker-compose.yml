@@ -2,8 +2,7 @@ version: "3"
 
 services:
   db:
-    image: ircnega/mdc_db:1.0.3
-    # build: ./db/
+    build: ./db/
     # networks:
     #   - traefik-proxy
     ports:
@@ -19,7 +18,7 @@ services:
   frontend:
     build: ./frontend/
     ports:
-      - "80:80"
+      - "8811:80"
     restart: always
     volumes:
       - ./frontend/html:/usr/share/nginx/html
