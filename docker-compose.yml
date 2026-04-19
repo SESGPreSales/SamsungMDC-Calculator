@@ -1,8 +1,10 @@
-version: '3'
+version: "3"
 
 services:
   db:
-    image: ircnega/mdc_db:1.0.2
+    # image: ircnega/mdc_db:1.0.2
+    build: ./db/
+    container_name: mdc_db_temp
     # networks:
     #   - traefik-proxy
     ports:
@@ -32,24 +34,23 @@ services:
     #   - "traefik.http.middlewares.mdc.redirectscheme.scheme=https"
     #   - "traefik.http.middlewares.mdc.redirectscheme.permanent=true"
 
-  mongo-express:
-      image: mongo-express
-      restart: always
-      # labels:
-      #   - "traefik.enable=true"
-      #   - "traefik.http.routers.express.rule=Host(`node.sesg.ch`) && PathPrefix(`/express`)"
-      #   - "traefik.http.middlewares.strip-expresspath.stripprefix.prefixes=/express"
-      #   - "traefik.http.routers.express.middlewares=strip-expresspath@docker"
-      # networks:
-      #   - traefik-proxy
-      ports:
-        - 8081:8081
-      environment:
-        ME_CONFIG_MONGODB_ADMINUSERNAME: admin
-        ME_CONFIG_MONGODB_ADMINPASSWORD: mdcpassword
-        ME_CONFIG_MONGODB_URL: mongodb://admin:mdcpassword@db:27017/
-        # ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
-
+  # mongo-express:
+  #   image: mongo-express
+  #   restart: always
+  #   # labels:
+  #   #   - "traefik.enable=true"
+  #   #   - "traefik.http.routers.express.rule=Host(`node.sesg.ch`) && PathPrefix(`/express`)"
+  #   #   - "traefik.http.middlewares.strip-expresspath.stripprefix.prefixes=/express"
+  #   #   - "traefik.http.routers.express.middlewares=strip-expresspath@docker"
+  #   # networks:
+  #   #   - traefik-proxy
+  #   ports:
+  #     - 8081:8081
+  #   environment:
+  #     ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+  #     ME_CONFIG_MONGODB_ADMINPASSWORD: mdcpassword
+  #     ME_CONFIG_MONGODB_URL: mongodb://admin:mdcpassword@db:27017/
+  #     # ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
 
 # networks:
 #   traefik-proxy:
