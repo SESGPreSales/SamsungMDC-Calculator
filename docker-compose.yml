@@ -2,9 +2,8 @@ version: "3"
 
 services:
   db:
-    # image: ircnega/mdc_db:1.0.2
-    build: ./db/
-    container_name: mdc_db_temp
+    image: ircnega/mdc_db:1.0.3
+    # build: ./db/
     # networks:
     #   - traefik-proxy
     ports:
