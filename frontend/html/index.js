@@ -43,7 +43,6 @@ function getData() {
 	// Define the URL to fetch the data from
 	const url = "/api/tablecontent";
 
-	// Perform the fetch
 	fetch(url)
 		.then(response => {
 			// Check if the fetch was successful
@@ -112,18 +111,45 @@ function fetchDetails(val) {
 function showDetails(data) {
 	toClip.classList.remove("hidden");
 	//get all needed data
+	let dataLengthLow = "";
+	let dataLengthHigh = "";
+	let hasTwoLengths = undefined; // used for newer commands with Low and High length information
 	let hasFixedValues = data[0].hasfixedvalues || false;
 	let hasSubCmd = data[0].hassubcmd || false;
 	let subCmd = data[0].subcmd || "";
-	//INFO: using parseInt(datalength, 16) to convert HEX to DEC
-	let dataLength =
-	data[0].datalength === "variable" ? null : parseInt(data[0].datalength, 16);
 	let image = data[0].image;
 	let command = data[0].command;
 	let values = data[0].values || [];
 	let moreInfo = data[0].moreinfo || "";
 	let outData = [];
 	let canSet = data[0].canSet || false;
+	//INFO: using parseInt(datalength, 16) to convert HEX to DEC
+	// TODO Check how to integrate the Low and High length information. Check where it is used and how...
+	let dataLength =
+		data[0].datalength === "variable" ? null : parseInt(data[0].datalength, 16);
+
+	//checks is the command has low and high length informaton, then creates the values for them
+	if (dataLength) {
+		if (data[0].datalength.length === 4) {
+			dataLengthLow = parseInt(data[0].datalength.slice(-2), 16);
+			dataLength = dataLengthLow;
+			dataLengthHigh = parseInt(data[0].datalength.slice(0, 1), 16);
+			hasTwoLengths = true;
+		}
+		if (data[0].datalength.length === 2) {
+			dataLengthLow = parseInt(data[0].datalength, 16);
+			dataLength = dataLengthLow;
+			dataLengthHigh = "00";
+			hasTwoLengths = false;
+		}
+		console.log(
+			data[0].datalength.length,
+			data[0].datalength,
+			dataLengthHigh,
+			dataLengthLow,
+			dataLength,
+		);
+	}
 
 	checkbox.addEventListener("change", showSetDetails);
 
@@ -148,7 +174,7 @@ function showDetails(data) {
 		document.querySelectorAll(".d-div").forEach(e => e.classList.add("hidden"));
 		document.querySelector(".open").classList.add("hidden");
 		//hasFixedValues ? (createOptionsSelect(values), selectsFull.classList.remove('hidden')): selectsFull.classList.add('hidden')
-		
+
 		//show or remove the more info box
 		moreInfo
 			? moreinfo.classList.remove("hidden")
@@ -210,7 +236,15 @@ function showDetails(data) {
 		if (!checkbox.checked) {
 			if (!hasSubCmd) {
 				// calculate if openInput fiels are needes (-1 because this is from the selector)
-				outData = [command, two(input_id.value), "00"];
+
+				data[0].datalength.length === 2
+					? (outData = [command, two(input_id.value), "00"])
+					: (outData = [
+							command,
+							two(input_id.value),
+							two(dataLengthHigh),
+							"00",
+						]);
 
 				if (neededFields == 0) showHEX(outData);
 				if (neededFields > 0) {
@@ -224,7 +258,15 @@ function showDetails(data) {
 			}
 			if (hasSubCmd) {
 				// calculate if openInput fiels are needes (-1 because this is from the selector)
-				outData = [command, two(input_id.value), "01", subCmd];
+				data[0].datalength.length === 2
+					? (outData = [command, two(input_id.value), "01", subCmd])
+					: (outData = [
+							command,
+							two(input_id.value),
+							two(dataLengthHigh),
+							"01",
+							subCmd,
+						]);
 				showHEX(outData);
 			}
 		}
@@ -232,12 +274,22 @@ function showDetails(data) {
 		if (checkbox.checked) {
 			if (hasFixedValues && !hasSubCmd && dataLength) {
 				// calculate if openInput fiels are needes (-1 because this is from the selector)
-				outData = [
-					command,
-					two(input_id.value),
-					two(dataLength),
-					selects.value,
-				];
+
+				data[0].datalength.length === 2
+					? (outData = [
+							command,
+							two(input_id.value),
+							two(dataLength),
+							selects.value,
+						])
+					: (outData = [
+							command,
+							two(input_id.value),
+							two(dataLengthHigh),
+							two(dataLength),
+							selects.value,
+						]);
+				console.log(outData);
 
 				if (neededFields == 0) showHEX(outData);
 				if (neededFields > 0) {
@@ -251,14 +303,23 @@ function showDetails(data) {
 			}
 			if (hasFixedValues && hasSubCmd && dataLength) {
 				// console.log("Case2: fixed values AND subCmd")
-
-				outData = [
-					command,
-					two(input_id.value),
-					two(dataLength),
-					subCmd,
-					selects.value,
-				];
+				data[0].datalength.length === 2
+					? (outData = [
+							command,
+							two(input_id.value),
+							two(dataLength),
+							subCmd,
+							selects.value,
+						])
+					: (outData = [
+							command,
+							two(input_id.value),
+							two(dataLengthHigh),
+							two(dataLength),
+							subCmd,
+							selects.value,
+						]);
+				console.log(outData);
 
 				if (neededFields == 0) showHEX(outData);
 				if (neededFields > 0) {
@@ -302,7 +363,15 @@ function showDetails(data) {
 				showHEX(outData);
 			}
 			if (!hasFixedValues && !hasSubCmd && dataLength) {
-				outData = [command, two(input_id.value), two(dataLength)];
+				data[0].datalength.length === 2
+					? (outData = [command, two(input_id.value), two(dataLength)])
+					: (outData = [
+							command,
+							two(input_id.value),
+							two(dataLengthHigh),
+							two(dataLength),
+						]);
+				console.log(outData);
 
 				if (neededFields == 0) showHEX(outData);
 				if (neededFields > 0) {
@@ -318,8 +387,16 @@ function showDetails(data) {
 			//this is the working thing for the Network Configuration thing. not working.
 
 			if (!hasFixedValues && hasSubCmd && dataLength) {
-				outData = [command, two(input_id.value), two(dataLength), subCmd];
-
+				data[0].datalength.length === 2
+					? (outData = [command, two(input_id.value), two(dataLength), subCmd])
+					: (outData = [
+							command,
+							two(input_id.value),
+							two(dataLengthHigh),
+							two(dataLength),
+							subCmd,
+						]);
+				console.log(outData);
 				if (neededFields == 0) showHEX(outData);
 				if (neededFields > 0) {
 					for (let i = 1; i <= neededFields; i++) {
