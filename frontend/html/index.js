@@ -124,7 +124,6 @@ function showDetails(data) {
 	let outData = [];
 	let canSet = data[0].canSet || false;
 	//INFO: using parseInt(datalength, 16) to convert HEX to DEC
-	// TODO Check how to integrate the Low and High length information. Check where it is used and how...
 	let dataLength =
 		data[0].datalength === "variable" ? null : parseInt(data[0].datalength, 16);
 
