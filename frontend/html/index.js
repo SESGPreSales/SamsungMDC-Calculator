@@ -113,7 +113,7 @@ function showDetails(data) {
 	//get all needed data
 	let dataLengthLow = "";
 	let dataLengthHigh = "";
-	let hasTwoLengths = undefined; // used for newer commands with Low and High length information
+	let hasTwoLength = data[0].hasTwoLength || false; // used for newer commands with Low and High length information
 	let hasFixedValues = data[0].hasfixedvalues || false;
 	let hasSubCmd = data[0].hassubcmd || false;
 	let subCmd = data[0].subcmd || "";
@@ -133,21 +133,19 @@ function showDetails(data) {
 			dataLengthLow = parseInt(data[0].datalength.slice(-2), 16);
 			dataLength = dataLengthLow;
 			dataLengthHigh = parseInt(data[0].datalength.slice(0, 1), 16);
-			hasTwoLengths = true;
 		}
 		if (data[0].datalength.length === 2) {
 			dataLengthLow = parseInt(data[0].datalength, 16);
 			dataLength = dataLengthLow;
 			dataLengthHigh = "00";
-			hasTwoLengths = false;
 		}
-		console.log(
-			data[0].datalength.length,
-			data[0].datalength,
-			dataLengthHigh,
-			dataLengthLow,
-			dataLength,
-		);
+		// console.log(
+		// 	data[0].datalength.length,
+		// 	data[0].datalength,
+		// 	dataLengthHigh,
+		// 	dataLengthLow,
+		// 	dataLength,
+		// );
 	}
 
 	checkbox.addEventListener("change", showSetDetails);
@@ -288,7 +286,7 @@ function showDetails(data) {
 							two(dataLength),
 							selects.value,
 						]);
-				console.log(outData);
+				// console.log(outData);
 
 				if (neededFields == 0) showHEX(outData);
 				if (neededFields > 0) {
@@ -318,7 +316,7 @@ function showDetails(data) {
 							subCmd,
 							selects.value,
 						]);
-				console.log(outData);
+				// console.log(outData);
 
 				if (neededFields == 0) showHEX(outData);
 				if (neededFields > 0) {
@@ -370,7 +368,7 @@ function showDetails(data) {
 							two(dataLengthHigh),
 							two(dataLength),
 						]);
-				console.log(outData);
+				// console.log(outData);
 
 				if (neededFields == 0) showHEX(outData);
 				if (neededFields > 0) {
@@ -395,7 +393,7 @@ function showDetails(data) {
 							two(dataLength),
 							subCmd,
 						]);
-				console.log(outData);
+				// console.log(outData);
 				if (neededFields == 0) showHEX(outData);
 				if (neededFields > 0) {
 					for (let i = 1; i <= neededFields; i++) {
